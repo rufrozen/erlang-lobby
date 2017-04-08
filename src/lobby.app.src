@@ -1,0 +1,8 @@
+{application, lobby, [
+    {description,"Description"},
+    {vsn,"1.0"},
+    {modules,[]},
+    {registered,[]},
+    {applications,[kernel,stdlib,sasl,lager,ibrowse,cowboy]},
+	{mod,{lobby_app,[]}} 
+]}.
