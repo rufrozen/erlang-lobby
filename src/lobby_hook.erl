@@ -1,30 +1,33 @@
 %% @author: Igor
 %% @date: 08.04.2017
 
--module(lobby_app).
+-module(lobby_hook).
 
--behaviour(application).
+-behaviour(cowboy_middleware).
 
-%% Application callbacks
+%% Include files
+
+%% Exported Functions
+
 -export([
-	start/2, 
-	stop/1
+    execute/2
 ]).
 
 %%%===================================================================
-%%% Application callbacks
+%%% API
 %%%===================================================================
 
-start(_StartType, _StartArgs) ->
-    lobby_gproc:init(),
-    lobby_cowboy:start_http(),
-    lobby_sup:start_link().
-
-stop(_State) ->
-    ok.
+execute(Req, Env) ->
+    Url = cowboy_req:url(Req),
+    Method = cowboy_req:method(Req),
+    lager:debug([{caption, web}], "~s ~s", [Method, Url]),
+    {ok, Req, Env}.
 
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+
+
+
 
 

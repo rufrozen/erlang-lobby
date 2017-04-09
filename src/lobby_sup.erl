@@ -18,20 +18,19 @@
 %%%===================================================================
 
 start_link() ->
-        supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %%%===================================================================
 %%% Supervisor callbacks
 %%%===================================================================
 
 init([]) ->
-    Restart = permanent,
-    Shutdown = 2000,
-    Type = worker,
-
-    AChild = {'AName', {'AModule', start_link, []},
-        Restart, Shutdown, Type, ['AModule']},
-
+    AChild = {
+        'AName', 
+        {'AModule', start_link, []},
+        permanent, 2000, worker, 
+        ['AModule']
+    },
     {ok, {{one_for_one, 10, 10}, []}}.
 
 %%%===================================================================
